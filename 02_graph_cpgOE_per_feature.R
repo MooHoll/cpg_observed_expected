@@ -4,7 +4,7 @@ options(echo=TRUE)
 
 # Takes the genes, exons, introns fasta files as command line arguments
 #---------------------------------------------
-# Identify trends in CpG o/e for different genomic features
+# Identify trends in CpG o/e for different genomic Features
 #---------------------------------------------
 
 library(readr)
@@ -14,11 +14,11 @@ library(sqldf)
 library(ggplot2)
 library(ggpmisc)
 
-species <- tools::file_path_sans_ext(args[1])
-species1 <- gsub("_genes","",species)
+species <- tools::file_path_sans_ext(basename(args[1]))
+species <- gsub("_genes","",species)
 
 #---------------------------------------------
-# Count number of C's, G's and CpGs per feature and get the seq length
+# Count number of C's, G's and CpGs per Feature and get the seq length
 #---------------------------------------------
 gene_sequence <- read.fasta(args[1])
 
@@ -38,7 +38,7 @@ for(i in seq_along(gene_sequence)){
 lengths <- getLength(gene_sequence)
 
 gene_data <- data.frame(seq_names,c_count,g_count, cg_count, lengths)
-gene_data$feature <- "gene"
+gene_data$Feature <- "Genes"
 
 #---------------------------------------------
 gene_sequence <- read.fasta(args[2])
@@ -59,7 +59,7 @@ for(i in seq_along(gene_sequence)){
 lengths <- getLength(gene_sequence)
 
 exon_data <- data.frame(seq_names,c_count,g_count, cg_count, lengths)
-exon_data$feature <- "exon"
+exon_data$Feature <- "Exons"
 
 #---------------------------------------------
 gene_sequence <- read.fasta(args[3])
@@ -80,10 +80,10 @@ for(i in seq_along(gene_sequence)){
 lengths <- getLength(gene_sequence)
 
 intron_data <- data.frame(seq_names,c_count,g_count, cg_count, lengths)
-intron_data$feature <- "intron"
+intron_data$Feature <- "Introns"
 
 #---------------------------------------------
-# Make one dataframe with all features in
+# Make one dataframe with all Features in
 #---------------------------------------------
 
 all_data <- rbind(gene_data, exon_data, intron_data)
@@ -117,24 +117,24 @@ plot(density(all_data_subset$cpg_ob_ex))
 #---------------------------------------------
 
 # Find the value of the biggest peak for each annotation
-max_gene <- which.max(density(all_data_subset$cpg_ob_ex[all_data_subset$feature=="gene"])$y) 
-density_max_gene <- density(all_data_subset$cpg_ob_ex[all_data_subset$feature=="gene"])$x[max_gene] 
+max_gene <- which.max(density(all_data_subset$cpg_ob_ex[all_data_subset$Feature=="gene"])$y) 
+density_max_gene <- density(all_data_subset$cpg_ob_ex[all_data_subset$Feature=="gene"])$x[max_gene] 
 
-max_exon <- which.max(density(all_data_subset$cpg_ob_ex[all_data_subset$feature=="exon"])$y) 
-density_max_exon <- density(all_data_subset$cpg_ob_ex[all_data_subset$feature=="exon"])$x[max_exon] 
+max_exon <- which.max(density(all_data_subset$cpg_ob_ex[all_data_subset$Feature=="exon"])$y) 
+density_max_exon <- density(all_data_subset$cpg_ob_ex[all_data_subset$Feature=="exon"])$x[max_exon] 
 
-max_intron <- which.max(density(all_data_subset$cpg_ob_ex[all_data_subset$feature=="intron"])$y) 
-density_max_intron <- density(all_data_subset$cpg_ob_ex[all_data_subset$feature=="intron"])$x[max_intron] 
+max_intron <- which.max(density(all_data_subset$cpg_ob_ex[all_data_subset$Feature=="intron"])$y) 
+density_max_intron <- density(all_data_subset$cpg_ob_ex[all_data_subset$Feature=="intron"])$x[max_intron] 
 
 # Find the trough so we can find the second peak
-DensityY_gene <- density(all_data_subset$cpg_ob_ex[all_data_subset$feature=="gene"])$y
-DensityX_gene <- density(all_data_subset$cpg_ob_ex[all_data_subset$feature=="gene"])$x
+DensityY_gene <- density(all_data_subset$cpg_ob_ex[all_data_subset$Feature=="gene"])$y
+DensityX_gene <- density(all_data_subset$cpg_ob_ex[all_data_subset$Feature=="gene"])$x
 
-DensityY_exon <- density(all_data_subset$cpg_ob_ex[all_data_subset$feature=="exon"])$y
-DensityX_exon <- density(all_data_subset$cpg_ob_ex[all_data_subset$feature=="exon"])$x
+DensityY_exon <- density(all_data_subset$cpg_ob_ex[all_data_subset$Feature=="exon"])$y
+DensityX_exon <- density(all_data_subset$cpg_ob_ex[all_data_subset$Feature=="exon"])$x
 
-DensityY_intron <- density(all_data_subset$cpg_ob_ex[all_data_subset$feature=="intron"])$y
-DensityX_intron <- density(all_data_subset$cpg_ob_ex[all_data_subset$feature=="intron"])$x
+DensityY_intron <- density(all_data_subset$cpg_ob_ex[all_data_subset$Feature=="intron"])$y
+DensityX_intron <- density(all_data_subset$cpg_ob_ex[all_data_subset$Feature=="intron"])$x
 
 # Only looking between the two peaks to avoid the tails
 MinYDensity_gene<- min(DensityY_gene[DensityX_gene < 1.1 & DensityX_gene > 0.5]) 
@@ -150,36 +150,36 @@ trough_intron <- which(DensityY_intron == MinYDensity_intron)
 density_trough_intron <- DensityX_intron[trough_intron]
 
 # Find the value of the second biggest peak
-MaxY_gene <- max(density(all_data_subset$cpg_ob_ex[all_data_subset$feature=="gene"])
-                 $y[density(all_data_subset$cpg_ob_ex[all_data_subset$feature=="gene"])$x < density_trough_gene])
-second_max_gene <- which(density(all_data_subset$cpg_ob_ex[all_data_subset$feature=="gene"])$y == MaxY_gene) 
-density_second_max_gene <- density(all_data_subset$cpg_ob_ex[all_data_subset$feature=="gene"])$x[second_max_gene]
+MaxY_gene <- max(density(all_data_subset$cpg_ob_ex[all_data_subset$Feature=="gene"])
+                 $y[density(all_data_subset$cpg_ob_ex[all_data_subset$Feature=="gene"])$x < density_trough_gene])
+second_max_gene <- which(density(all_data_subset$cpg_ob_ex[all_data_subset$Feature=="gene"])$y == MaxY_gene) 
+density_second_max_gene <- density(all_data_subset$cpg_ob_ex[all_data_subset$Feature=="gene"])$x[second_max_gene]
 
-MaxY_exon <- max(density(all_data_subset$cpg_ob_ex[all_data_subset$feature=="exon"])
-                 $y[density(all_data_subset$cpg_ob_ex[all_data_subset$feature=="exon"])$x < density_trough_exon])
-second_max_exon <- which(density(all_data_subset$cpg_ob_ex[all_data_subset$feature=="exon"])$y == MaxY_exon) 
-density_second_max_exon <- density(all_data_subset$cpg_ob_ex[all_data_subset$feature=="exon"])$x[second_max_exon]
+MaxY_exon <- max(density(all_data_subset$cpg_ob_ex[all_data_subset$Feature=="exon"])
+                 $y[density(all_data_subset$cpg_ob_ex[all_data_subset$Feature=="exon"])$x < density_trough_exon])
+second_max_exon <- which(density(all_data_subset$cpg_ob_ex[all_data_subset$Feature=="exon"])$y == MaxY_exon) 
+density_second_max_exon <- density(all_data_subset$cpg_ob_ex[all_data_subset$Feature=="exon"])$x[second_max_exon]
 
-MaxY_intron <- max(density(all_data_subset$cpg_ob_ex[all_data_subset$feature=="intron"])
-                 $y[density(all_data_subset$cpg_ob_ex[all_data_subset$feature=="intron"])$x < density_trough_intron])
-second_max_intron <- which(density(all_data_subset$cpg_ob_ex[all_data_subset$feature=="intron"])$y == MaxY_intron) 
-density_second_max_intron <- density(all_data_subset$cpg_ob_ex[all_data_subset$feature=="intron"])$x[second_max_intron]
+MaxY_intron <- max(density(all_data_subset$cpg_ob_ex[all_data_subset$Feature=="intron"])
+                 $y[density(all_data_subset$cpg_ob_ex[all_data_subset$Feature=="intron"])$x < density_trough_intron])
+second_max_intron <- which(density(all_data_subset$cpg_ob_ex[all_data_subset$Feature=="intron"])$y == MaxY_intron) 
+density_second_max_intron <- density(all_data_subset$cpg_ob_ex[all_data_subset$Feature=="intron"])$x[second_max_intron]
 
 #---------------------------------------------
 # Make a fancy CpG o/e plot
 #---------------------------------------------
-pdf(paste(species,".pdf"))
-ggplot(all_data_subset, aes(x=cpg_ob_ex, colour=feature))+
+pdf(paste(species,".pdf", sep=""))
+ggplot(all_data_subset, aes(x=cpg_ob_ex, colour=Feature))+
   geom_histogram(aes(y=..density..), position="identity", alpha=0.2, bins = 40 )+
   geom_line(stat="density",size=1.5)+
-  geom_vline(aes(xintercept=density_second_max_gene),linetype="dashed", size=1.5,colour="green")+
-  geom_vline(aes(xintercept=density_max_gene),linetype="dashed",size=1.5,colour="green")+
-  geom_vline(aes(xintercept=density_second_max_exon),linetype="dashed", size=1.5,colour="red")+
-  geom_vline(aes(xintercept=density_max_exon),linetype="dashed",size=1.5,colour="red")+
   geom_vline(aes(xintercept=density_second_max_intron),linetype="dashed", size=1.5,colour="blue")+
   geom_vline(aes(xintercept=density_max_intron),linetype="dashed",size=1.5,colour="blue")+
+  geom_vline(aes(xintercept=density_second_max_exon),linetype="dashed", size=1.5,colour="red")+
+  geom_vline(aes(xintercept=density_max_exon),linetype="dashed",size=1.5,colour="red")+
+  geom_vline(aes(xintercept=density_second_max_gene),linetype="dashed", size=1.5,colour="green")+
+  geom_vline(aes(xintercept=density_max_gene),linetype="dashed",size=1.5,colour="green")+
   theme_bw()+
-  ggtitle(print(species))+
+  ggtitle(paste(species))+
   theme(axis.title = element_text(size=20),
         axis.text = element_text(size=18),
         plot.title = element_text(size=20))+
