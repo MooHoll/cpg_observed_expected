@@ -20,19 +20,21 @@ Requires: bedtools.
 
 It produces three output files:
 - your_genome_genes.fa
-- your_genomes_intron.fa
+- your_genome_intron.fa
 - your_genome_exons.fa
 
 **TO-DO:** I also want to create an extra annotation of 2000bp upstream of genes and also intergenic regions. Consider, creating the CpG o/e dataframe here and then the next script can just be to make the graph. Do all the heavy lifting at once?
 
 ----
 
-**02_XXX.R**
-This script takes the above created output files and calculates the CpG o/e ratio for each annotation. There are currently some manual cut-offs which must be defined within the script by eye-balling the CpG o/e distribution in your species. 
+**02_graph_cpgOE_per_feature.R**
+This script takes the above created output files and calculates the CpG o/e ratio for each annotation. 
+
+<code>Rscript 02_graph_cpgOE_per_feature.R your_genome_genes.fa your_genome_exons.fa your_genome_intron.fa </code>
 
 The output of this script is a nice plot which shows the CpG o/e distribution for each annotation given.
 
-**TO-DO:** Speed up the length calculation and find a way to remove any manual input for cut-offs.
+**TO-DO:** Tidy up, not very effecient, takes a while to run and will only take the three specificed files.
 
 ----
 
