@@ -9,16 +9,16 @@ A CpG observed/expected frequency of 1.0 is predicted when there is no DNA methy
 
 For more clear information see this publication [Provataris et al. (2018)](https://doi.org/10.1093/gbe/evy066).
 
-## Scripts are usage
+## Scripts and usage
 
-**01_XXX.sh**
+**01_make_cpgOE_input_files.sh**
 This script takes a genome in fasta format and the corresonding gff3 annotation file. It will produce an output fasta file for genes, introns and exons.
 
 Requires: bedtools.
 
-<code>bash 01_XXX.sh your_genome.gff3 your_genome.fa</code>
+<code>bash 01_make_cpgOE_input_files.sh your_genome.gff3 your_genome.fa</code>
 
-It produced three output files:
+It produces three output files:
 - your_genome_genes.fa
 - your_genomes_intron.fa
 - your_genome_exons.fa
