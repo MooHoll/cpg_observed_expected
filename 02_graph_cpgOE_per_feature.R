@@ -113,6 +113,13 @@ all_data_subset <- subset(all_data_subset, cpg_ob_ex > 0.01)
 plot(density(all_data_subset$cpg_ob_ex))
 
 #---------------------------------------------
+# Write out the important dataframe in case you want it later
+#---------------------------------------------
+
+write.table(all_data_subset, file=paste(species,"data.txt", sep="_"),
+            sep="\t", quote = F, col.names = T, row.names = F)
+
+#---------------------------------------------
 # Calculate where the peaks are
 #---------------------------------------------
 
