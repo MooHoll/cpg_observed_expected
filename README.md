@@ -7,7 +7,7 @@ DNA methylation (5mC) causes spontaneous deanimation of cytosine nucleotides to 
 
 A CpG observed/expected frequency of 1.0 is predicted when there is no DNA methylation present in a ragion, whereas a CpG o/e < 1.0 may suggest the presence of DNA methylation. However, it is not quite this simple as other evolutionary forces may influence the CpG content in a given region. Generally, the presence of two peaks in CpG o/e, one around 0.5 and another around 1.0 suggest DNA methylation presence.
 
-For more clear information see this publication (Provataris et al. (2018))[https://doi.org/10.1093/gbe/evy066].
+For more clear information see this publication [Provataris et al. (2018)](https://doi.org/10.1093/gbe/evy066).
 
 ## Scripts are usage
 
