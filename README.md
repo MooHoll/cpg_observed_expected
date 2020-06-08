@@ -16,12 +16,12 @@ This script takes a genome in fasta format and the corresonding gff3 annotation 
 
 Requires: bedtools.
 
-<code>bash 01_make_cpgOE_input_files.sh your_genome.gff3 your_genome.fa</code>
+<code>bash 01_make_cpgOE_input_files.sh species.gff3 species.fa</code>
 
 It produces three output files:
-- your_genome_genes.fa
-- your_genome_intron.fa
-- your_genome_exons.fa
+- species_genes.fa
+- species_exons.fa
+- species_introns.fa
 
 **TO-DO:** I also want to create an extra annotation of 2000bp upstream of genes and also intergenic regions. Consider, creating the CpG o/e dataframe here and then the next script can just be to make the graph. Do all the heavy lifting at once?
 
@@ -30,15 +30,24 @@ It produces three output files:
 **02_graph_cpgOE_per_feature.R**
 This script takes the above created output files and calculates the CpG o/e ratio for each annotation. 
 
-<code>Rscript 02_graph_cpgOE_per_feature.R your_genome_genes.fa your_genome_exons.fa your_genome_intron.fa </code>
+<code>Rscript 02_graph_cpgOE_per_feature.R species_genes.fa species_exons.fa species_introns.fa </code>
 
-The output of this script is a nice plot which shows the CpG o/e distribution for each annotation given.
+It produces two output files:
+- species.pdf (a nice graph with the CpG o/e distribution and peaks for each feature)
+- species_data.txt (a file with the CpG o/e data for further analysis, if you want)
 
 **TO-DO:** Tidy up, not very effecient, takes a while to run and will only take the three specificed files.
 
 ----
 
-**03_XXX.R**
-Finally, this script will take your feature of choice (currently just one at a time), e.g. just genes, and force two mixture normal distributions using the R package *mixtools* to check for the presence of two distributions, i.e. methylated features and non-methylated features. 
+**03_mixed_distribution_testing.R**
+Finally, this script will take the above species_data.txt and force two mixture normal distributions using the R package *mixtools* to check for the presence of two distributions, i.e. methylated features and non-methylated features. 
+
+<code>Rscript 03_mixed_distribution_testing.R species_data.txt </code>
+
+It produces three output files:
+- species_genes.pdf
+- species_exons.pdf
+- species_introns.pdf
 
 **TO-DO:** Find way of adding 95% confidence intervals to the mean of each distribution.
