@@ -23,7 +23,7 @@ It produces three output files:
 - your_genomes_intron.fa
 - your_genome_exons.fa
 
-**TO-DO:** I also want to create an extra annotation of 2000bp upstream of genes and also intergenic regions.
+**TO-DO:** I also want to create an extra annotation of 2000bp upstream of genes and also intergenic regions. Consider, creating the CpG o/e dataframe here and then the next script can just be to make the graph. Do all the heavy lifting at once?
 
 ----
 
