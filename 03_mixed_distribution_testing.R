@@ -36,7 +36,7 @@ cpg_oe_introns <- all_data_subset$cpg_ob_ex[all_data_subset$Feature=="Introns"]
 
 mixmdl <- normalmixEM(cpg_oe_genes, k = 2)
 
-pdf(paste(species,"genes.pdf", sep=""))
+pdf(paste(species,"genes.pdf", sep="_"))
 data.frame(x = mixmdl$x) %>%
   ggplot() +
   geom_histogram(aes(x, ..density..), binwidth = 0.05, colour = "black", alpha=0.2) +
@@ -61,7 +61,7 @@ dev.off()
 
 mixmdl <- normalmixEM(cpg_oe_exons, k = 2)
 
-pdf(paste(species,"exons.pdf", sep=""))
+pdf(paste(species,"exons.pdf", sep="_"))
 data.frame(x = mixmdl$x) %>%
   ggplot() +
   geom_histogram(aes(x, ..density..), binwidth = 0.05, colour = "black", alpha=0.2) +
@@ -86,7 +86,7 @@ dev.off()
 
 mixmdl <- normalmixEM(cpg_oe_introns, k = 2)
 
-pdf(paste(species,"introns.pdf", sep=""))
+pdf(paste(species,"introns.pdf", sep="_"))
 data.frame(x = mixmdl$x) %>%
   ggplot() +
   geom_histogram(aes(x, ..density..), binwidth = 0.05, colour = "black", alpha=0.2) +
