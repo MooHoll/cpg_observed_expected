@@ -179,12 +179,12 @@ pdf(paste(species,".pdf", sep=""))
 ggplot(all_data_subset, aes(x=cpg_ob_ex, colour=Feature))+
   geom_histogram(aes(y=..density..), position="identity", alpha=0.2, bins = 40 )+
   geom_line(stat="density",size=1.5)+
-  geom_vline(aes(xintercept=density_second_max_intron),linetype="dashed", size=1.5,colour="blue")+
-  geom_vline(aes(xintercept=density_max_intron),linetype="dashed",size=1.5,colour="blue")+
-  geom_vline(aes(xintercept=density_second_max_exon),linetype="dashed", size=1.5,colour="red")+
-  geom_vline(aes(xintercept=density_max_exon),linetype="dashed",size=1.5,colour="red")+
-  geom_vline(aes(xintercept=density_second_max_gene),linetype="dashed", size=1.5,colour="green")+
-  geom_vline(aes(xintercept=density_max_gene),linetype="dashed",size=1.5,colour="green")+
+  #geom_vline(aes(xintercept=density_second_max_intron),linetype="dashed", size=1.5,colour="blue")+
+  #geom_vline(aes(xintercept=density_max_intron),linetype="dashed",size=1.5,colour="blue")+
+  #geom_vline(aes(xintercept=density_second_max_exon),linetype="dashed", size=1.5,colour="red")+
+  #geom_vline(aes(xintercept=density_max_exon),linetype="dashed",size=1.5,colour="red")+
+  #geom_vline(aes(xintercept=density_second_max_gene),linetype="dashed", size=1.5,colour="green")+
+  #geom_vline(aes(xintercept=density_max_gene),linetype="dashed",size=1.5,colour="green")+
   theme_bw()+
   ggtitle(paste(species))+
   theme(axis.title = element_text(size=20),
